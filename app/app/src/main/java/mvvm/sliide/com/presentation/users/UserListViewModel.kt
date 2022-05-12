@@ -24,10 +24,12 @@ class UserListViewModel @Inject constructor(
         get() = _onEvent
 
     fun getAllUsers() {
+        _onEvent.value = Event.ShowLoading
         disposable.add(
             userUseCase.getAllUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(::hideLoading)
                 .subscribe(
                     { userList -> onUsersSuccess(userList) },
                     { onError() }
@@ -36,16 +38,22 @@ class UserListViewModel @Inject constructor(
     }
 
     fun deleteUser(id: Long) {
+        _onEvent.value = Event.ShowLoading
         disposable.add(
             userUseCase.deleteUser(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(::hideLoading)
                 .subscribe({
                     _onEvent.value = Event.UserDeleteSuccess
                 }, {
                     _onEvent.value = Event.UserDeleteError
                 })
         )
+    }
+
+    private fun hideLoading() {
+        _onEvent.value = Event.HideLoading
     }
 
     private fun onUsersSuccess(usersList: List<User>) {
@@ -83,5 +91,7 @@ class UserListViewModel @Inject constructor(
         object UserDeleteSuccess : Event()
         object UserDeleteError : Event()
         object Error : Event()
+        object ShowLoading : Event()
+        object HideLoading : Event()
     }
 }

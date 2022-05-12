@@ -8,14 +8,13 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import io.mockk.verify
+import io.mockk.verifySequence
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import mvvm.sliide.com.domain.model.User
 import mvvm.sliide.com.domain.usecase.UserUseCase
 import mvvm.sliide.com.presentation.users.model.UserDataModel
 import mvvm.sliide.com.utils.RxImmediateSchedulerRule
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -63,8 +62,10 @@ class UserListViewModelTest {
 
         userListViewModel.getAllUsers()
 
-        verify {
+        verifySequence {
+            observer.onChanged(UserListViewModel.Event.ShowLoading)
             observer.onChanged(UserListViewModel.Event.Success(listOfUsers))
+            observer.onChanged(UserListViewModel.Event.HideLoading)
         }
     }
 
@@ -76,8 +77,10 @@ class UserListViewModelTest {
 
         userListViewModel.getAllUsers()
 
-        verify {
+        verifySequence {
+            observer.onChanged(UserListViewModel.Event.ShowLoading)
             observer.onChanged(UserListViewModel.Event.SuccessEmptyList)
+            observer.onChanged(UserListViewModel.Event.HideLoading)
         }
     }
 
@@ -89,8 +92,10 @@ class UserListViewModelTest {
 
         userListViewModel.getAllUsers()
 
-        verify {
+        verifySequence {
+            observer.onChanged(UserListViewModel.Event.ShowLoading)
             observer.onChanged(UserListViewModel.Event.Error)
+            observer.onChanged(UserListViewModel.Event.HideLoading)
         }
     }
 
@@ -101,8 +106,10 @@ class UserListViewModelTest {
 
         userListViewModel.deleteUser(1)
 
-        verify {
+        verifySequence {
+            observer.onChanged(UserListViewModel.Event.ShowLoading)
             observer.onChanged(UserListViewModel.Event.UserDeleteSuccess)
+            observer.onChanged(UserListViewModel.Event.HideLoading)
         }
     }
 
@@ -113,8 +120,10 @@ class UserListViewModelTest {
 
         userListViewModel.deleteUser(1)
 
-        verify {
+        verifySequence {
+            observer.onChanged(UserListViewModel.Event.ShowLoading)
             observer.onChanged(UserListViewModel.Event.UserDeleteError)
+            observer.onChanged(UserListViewModel.Event.HideLoading)
         }
     }
 }

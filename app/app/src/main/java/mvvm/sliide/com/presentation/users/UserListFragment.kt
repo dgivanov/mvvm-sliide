@@ -29,6 +29,8 @@ class UserListFragment : Fragment() {
 
     private val observer = Observer<UserListViewModel.Event> { event ->
         when (event) {
+            UserListViewModel.Event.ShowLoading -> showLoading()
+            UserListViewModel.Event.HideLoading -> hideLoading()
             is UserListViewModel.Event.Success -> onSuccess(event.listOfUsers)
             UserListViewModel.Event.Error -> showError()
             UserListViewModel.Event.UserDeleteSuccess -> updateUserList()
@@ -104,5 +106,13 @@ class UserListFragment : Fragment() {
             getString(R.string.user_list_empty_text),
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    private fun showLoading() {
+        binding.loadingBar.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        binding.loadingBar.visibility = View.GONE
     }
 }
