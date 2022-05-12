@@ -9,4 +9,6 @@ class UserRemoteDataSource @Inject constructor(
     fun getAllUsers() = goRestApi.getAllUsers()
 
     fun getLastPage(page: Int) = goRestApi.getAllUsers(page)
+
+    fun deleteUser(id: Long) = goRestApi.deleteUser(id)
 }

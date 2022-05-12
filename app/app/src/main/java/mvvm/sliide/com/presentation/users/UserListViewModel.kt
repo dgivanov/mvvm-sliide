@@ -35,6 +35,19 @@ class UserListViewModel @Inject constructor(
         )
     }
 
+    fun deleteUser(id: Long) {
+        disposable.add(
+            userUseCase.deleteUser(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _onEvent.value = Event.UserDeleteSuccess
+                }, {
+                    _onEvent.value = Event.UserDeleteError
+                })
+        )
+    }
+
     private fun onUsersSuccess(usersList: List<User>) {
         if (usersList.isEmpty()) {
             //TODO - Send a message to the UI and show an error
@@ -66,6 +79,8 @@ class UserListViewModel @Inject constructor(
 
     sealed class Event {
         data class Success(val listOfUsers: List<UserDataModel>) : Event()
+        object UserDeleteSuccess : Event()
+        object UserDeleteError : Event()
         object Error : Event()
     }
 }

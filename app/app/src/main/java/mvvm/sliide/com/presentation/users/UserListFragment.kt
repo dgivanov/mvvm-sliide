@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import mvvm.sliide.com.R
 import mvvm.sliide.com.databinding.FragmentUserListBinding
 import mvvm.sliide.com.presentation.users.model.UserDataModel
 
@@ -19,7 +22,7 @@ class UserListFragment : Fragment() {
     private lateinit var binding: FragmentUserListBinding
     private val userListAdapter by lazy {
         UserListAdapter {
-            //TODO - On click listener
+            showDeleteUserWarning(it)
         }
     }
 
@@ -27,6 +30,8 @@ class UserListFragment : Fragment() {
         when (event) {
             is UserListViewModel.Event.Success -> onSuccess(event.listOfUsers)
             UserListViewModel.Event.Error -> showError()
+            UserListViewModel.Event.UserDeleteSuccess -> updateUserList()
+            UserListViewModel.Event.UserDeleteError -> showUserDeleteError()
         }
     }
 
@@ -50,6 +55,32 @@ class UserListFragment : Fragment() {
     }
 
     private fun showError() {
+        //TODO - handle error
+    }
 
+    private fun showDeleteUserWarning(id: Long) {
+        val dialog = context?.let {
+            AlertDialog.Builder(it).setTitle(getString(R.string.user_list_dialog_title_text))
+                .setPositiveButton(
+                    getString(R.string.user_list_dialog_positive_button_text)
+                ) { view, _ ->
+                    userListViewModel.deleteUser(id)
+                    view.dismiss()
+                }
+        }
+        dialog?.show()
+    }
+
+    private fun updateUserList() {
+        userListAdapter.allUsersList.clear()
+        userListViewModel.getAllUsers()
+    }
+
+    private fun showUserDeleteError() {
+        Toast.makeText(
+            activity,
+            getString(R.string.user_list_deleted_user_failure),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
