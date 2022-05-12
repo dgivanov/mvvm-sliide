@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import mvvm.sliide.com.R
@@ -44,13 +45,15 @@ class UserListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         userListViewModel.onEvent.observe(viewLifecycleOwner, observer)
         userListViewModel.getAllUsers()
+        onAddUserClickListener()
     }
 
     private fun onSuccess(listOfUsers: List<UserDataModel>) {
         with(binding) {
             userListRecyclerView.layoutManager = LinearLayoutManager(activity)
+            userListAdapter.allUsersList.clear()
             userListRecyclerView.adapter = userListAdapter
-            userListAdapter.allUsersList.addAll(listOfUsers.asReversed())
+            userListAdapter.allUsersList.addAll(listOfUsers)
         }
     }
 
@@ -82,5 +85,11 @@ class UserListFragment : Fragment() {
             getString(R.string.user_list_deleted_user_failure),
             Toast.LENGTH_LONG
         ).show()
+    }
+
+    private fun onAddUserClickListener() {
+        binding.addUserButton.setOnClickListener {
+            findNavController().navigate(R.id.userListFragment_to_addUserDialogFragment)
+        }
     }
 }

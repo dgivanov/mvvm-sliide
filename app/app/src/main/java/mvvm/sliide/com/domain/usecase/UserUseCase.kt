@@ -10,4 +10,6 @@ class UserUseCase  @Inject constructor(
     fun getAllUsers() = userRepository.getAllUsers()
 
     fun deleteUser(id: Long) = userRepository.deleteUser(id)
+
+    fun addUser(name: String, email: String) = userRepository.addUser(name, email)
 }

@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import mvvm.sliide.com.data.mapper.toListOfUsers
 import mvvm.sliide.com.data.source.UserRemoteDataSource
+import mvvm.sliide.com.networking.model.CreateUserRequest
 import mvvm.sliide.com.domain.model.User
 import mvvm.sliide.com.domain.repository.UserRepository
 import mvvm.sliide.com.networking.model.UsersResponse
@@ -14,15 +15,12 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override fun getAllUsers(): Single<List<User>> = userRemoteDataSource.getAllUsers()
-        .flatMap { Single.just(it.meta.pagination.pages) }
-        .flatMap(::getLastPage)
         .flatMap(::toListOfUsers)
 
     override fun deleteUser(id: Long): Completable = userRemoteDataSource.deleteUser(id)
 
-    private fun getLastPage(page: Int): Single<UsersResponse> {
-        return userRemoteDataSource.getLastPage(page)
-    }
+    override fun addUser(name: String, email: String): Completable =
+        userRemoteDataSource.createUser(CreateUserRequest(name, email))
 
     private fun toListOfUsers(usersResponse: UsersResponse) =
         Single.just(usersResponse.toListOfUsers())

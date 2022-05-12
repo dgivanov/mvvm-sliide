@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">MvvmSliide</string>
 
+    <!--UserList-->
     <string name="user_list_dialog_title_text">Are you sure you want to remove this user? </string>
     <string name="user_list_dialog_positive_button_text">Yes </string>
     <string name="user_list_deleted_user_failure">We were not able to delete this user. Please try again!</string>
+
+    <!--Add User-->
+    <string name="add_user_error_text">There was an error with your request</string>
+    <string name="add_user_empty_email_error_text">Email cannot be empty</string>
+    <string name="add_user_empty_name_error_Text">Name cannot be empty</string>
+    <string name="add_user_name_hint_text">Name</string>
+    <string name="add_user_email_hint_text">Email</string>
+    <string name="add_user_button_text">Add new user</string>
 </resources>

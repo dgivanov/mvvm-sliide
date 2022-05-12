@@ -9,4 +9,6 @@ interface UserRepository {
     fun getAllUsers(): Single<List<User>>
 
     fun deleteUser(id: Long) : Completable
+
+    fun addUser(name: String, email: String) : Completable
 }
