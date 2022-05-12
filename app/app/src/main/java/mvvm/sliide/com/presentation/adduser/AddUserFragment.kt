@@ -11,20 +11,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import mvvm.sliide.com.R
-import mvvm.sliide.com.databinding.DialogFragmentAddUserBinding
+import mvvm.sliide.com.databinding.FragmentAddUserBinding
 
 @AndroidEntryPoint
-class AddUserDialogFragment : Fragment() {
+class AddUserFragment : Fragment() {
 
-    private val addUserDialogViewModel: AddUserDialogViewModel by viewModels()
-    private lateinit var binding: DialogFragmentAddUserBinding
+    private val addUserViewModel: AddUserViewModel by viewModels()
+    private lateinit var binding: FragmentAddUserBinding
 
-    private val onEventObserver = Observer<AddUserDialogViewModel.Event> {
+    private val onEventObserver = Observer<AddUserViewModel.Event> {
         when (it) {
-            AddUserDialogViewModel.Event.Success -> findNavController().popBackStack()
-            AddUserDialogViewModel.Event.Error -> showError(getString(R.string.add_user_error_text))
-            AddUserDialogViewModel.Event.EmptyEmail -> showError(getString(R.string.add_user_empty_email_error_text))
-            AddUserDialogViewModel.Event.EmptyName -> showError(getString(R.string.add_user_empty_name_error_Text))
+            AddUserViewModel.Event.Success -> findNavController().popBackStack()
+            AddUserViewModel.Event.Error -> showError(getString(R.string.add_user_error_text))
+            AddUserViewModel.Event.EmptyEmail -> showError(getString(R.string.add_user_empty_email_error_text))
+            AddUserViewModel.Event.EmptyName -> showError(getString(R.string.add_user_empty_name_error_Text))
         }
     }
 
@@ -33,16 +33,16 @@ class AddUserDialogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DialogFragmentAddUserBinding.inflate(inflater, container, false)
+        binding = FragmentAddUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addUserDialogViewModel.event.observe(viewLifecycleOwner, onEventObserver)
+        addUserViewModel.event.observe(viewLifecycleOwner, onEventObserver)
         with(binding) {
             createUserButton.setOnClickListener {
-                addUserDialogViewModel.createUser(
+                addUserViewModel.createUser(
                     nameEditText.text.toString(),
                     emailEditText.text.toString()
                 )

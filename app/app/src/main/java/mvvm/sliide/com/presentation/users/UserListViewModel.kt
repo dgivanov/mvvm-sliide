@@ -50,7 +50,7 @@ class UserListViewModel @Inject constructor(
 
     private fun onUsersSuccess(usersList: List<User>) {
         if (usersList.isEmpty()) {
-            //TODO - Send a message to the UI and show an error
+            _onEvent.value = Event.SuccessEmptyList
             return
         }
         val listOfUsers = mutableListOf<UserDataModel>().apply {
@@ -79,6 +79,7 @@ class UserListViewModel @Inject constructor(
 
     sealed class Event {
         data class Success(val listOfUsers: List<UserDataModel>) : Event()
+        object SuccessEmptyList : Event()
         object UserDeleteSuccess : Event()
         object UserDeleteError : Event()
         object Error : Event()

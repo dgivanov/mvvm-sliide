@@ -5,6 +5,8 @@
     <string name="user_list_dialog_title_text">Are you sure you want to remove this user? </string>
     <string name="user_list_dialog_positive_button_text">Yes </string>
     <string name="user_list_deleted_user_failure">We were not able to delete this user. Please try again!</string>
+    <string name="user_list_general_error_text">There was an error. Please try again later!</string>
+    <string name="user_list_empty_text">There are no users available at the moment. Please try again later!</string>
 
     <!--Add User-->
     <string name="add_user_error_text">There was an error with your request</string>

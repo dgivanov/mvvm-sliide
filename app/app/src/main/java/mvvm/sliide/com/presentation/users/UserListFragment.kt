@@ -33,6 +33,7 @@ class UserListFragment : Fragment() {
             UserListViewModel.Event.Error -> showError()
             UserListViewModel.Event.UserDeleteSuccess -> updateUserList()
             UserListViewModel.Event.UserDeleteError -> showUserDeleteError()
+            UserListViewModel.Event.SuccessEmptyList -> onEmptyListSuccess()
         }
     }
 
@@ -58,7 +59,11 @@ class UserListFragment : Fragment() {
     }
 
     private fun showError() {
-        //TODO - handle error
+        Toast.makeText(
+            activity,
+            getString(R.string.user_list_general_error_text),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun showDeleteUserWarning(id: Long) {
@@ -91,5 +96,13 @@ class UserListFragment : Fragment() {
         binding.addUserButton.setOnClickListener {
             findNavController().navigate(R.id.userListFragment_to_addUserDialogFragment)
         }
+    }
+
+    private fun onEmptyListSuccess() {
+        Toast.makeText(
+            activity,
+            getString(R.string.user_list_empty_text),
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

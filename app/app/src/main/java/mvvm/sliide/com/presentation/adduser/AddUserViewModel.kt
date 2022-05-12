@@ -11,7 +11,7 @@ import mvvm.sliide.com.domain.usecase.UserUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class AddUserDialogViewModel @Inject constructor(
+class AddUserViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ) : ViewModel() {
 

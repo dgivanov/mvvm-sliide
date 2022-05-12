@@ -17,7 +17,7 @@
         android:id="@+id/add_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin_large_size"
+        android:layout_margin="@dimen/default_margin_size_32"
         android:contentDescription="@null"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -18,8 +18,8 @@
 
     <fragment
         android:id="@+id/addUserDialogFragment"
-        android:name="mvvm.sliide.com.presentation.adduser.AddUserDialogFragment"
+        android:name="mvvm.sliide.com.presentation.adduser.AddUserFragment"
         android:label="AddUserDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_user" />
+        tools:layout="@layout/fragment_add_user" />
 
 </navigation>
