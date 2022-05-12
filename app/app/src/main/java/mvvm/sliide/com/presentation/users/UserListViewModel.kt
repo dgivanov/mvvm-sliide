@@ -5,4 +5,6 @@ import javax.inject.Inject
 
 class UserListViewModel @Inject constructor(
 ): ViewModel() {
+
+
 }
