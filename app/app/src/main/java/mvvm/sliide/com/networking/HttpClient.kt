@@ -1,5 +1,6 @@
 package mvvm.sliide.com.networking
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import mvvm.sliide.com.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ fun provideRetrofit(okHttpClient: OkHttpClient): GoRestApi {
     val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .client(okHttpClient)
         .build()
 
